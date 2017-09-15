@@ -67,9 +67,14 @@ X = [ones(m, 1) X];
 
 y_m = repmat((1:num_labels)', 1, m);
 
-for i = 1:m
-    y_m(:, i) = y_m(:, i) == y(i);
-end
+% a stupid way to compute y_m where y_m is a matrix and each coloum
+% corresponds to a scalar in vector y.
+% for i = 1:m
+%     y_m(:, i) = y_m(:, i) == y(i);
+% end
+
+% a fast way to compute y_m
+y_m = bsxfun(@eq, y_m, y');
 
 % hidden units
 a2 = sigmoid(Theta1 * X');
